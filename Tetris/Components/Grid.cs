@@ -7,7 +7,7 @@ namespace Tetris.Components
     {
         public readonly PlayGround PlayGround;
 
-        private readonly TableLayoutPanel tableLayoutPanel;
+        protected readonly TableLayoutPanel tableLayoutPanel;
 
         protected bool isDirty = false;
         protected readonly Cell[] _cells;
@@ -44,8 +44,11 @@ namespace Tetris.Components
         /// <summary>
         /// Draws the grid to the layout panel
         /// </summary>
-        public void Render()
+        public virtual void Render()
         {
+            // Also call playground
+            PlayGround.Render();
+
             if (!isDirty) return;
             tableLayoutPanel.Refresh();
             isDirty = false;

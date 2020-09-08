@@ -41,7 +41,7 @@ namespace Tetris
             // Paint a random tetromino every tick
             Grid.PlayGround.Reset();
             Grid.PlayGround.PaintTetromino(5, 10, tetrominos[_random.Next(0, tetrominos.Length)]);
-            Grid.PlayGround.Render();
+            Grid.Render();
         }
 
         #region Double buffer

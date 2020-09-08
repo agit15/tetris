@@ -43,6 +43,13 @@ namespace Tetris.Components
             }
         }
 
+        public override void Render()
+        {
+            if (!isDirty) return;
+            tableLayoutPanel.Refresh();
+            isDirty = false;
+        }
+
         public void PaintTetromino(int x, int y, Tetromino tetromino)
         {
             foreach (var cell in tetromino.Cells)
