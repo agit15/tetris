@@ -7,7 +7,6 @@ namespace Tetris.Components
     {
         private readonly PlayGround _playGround;
         private readonly TableLayoutPanel tableLayoutPanel;
-        private readonly Cell borderCell = new Cell(Color.Gray, new Cell.BorderStyle(-1, -1, Color.Black));
 
         protected readonly Cell[] _cells;
         protected readonly int width;
@@ -69,7 +68,7 @@ namespace Tetris.Components
                 {
                     if (x == 0 || y == 0 || x == width - 1 || y == height - 1)
                     {
-                        SetCell(x, y, borderCell);
+                        SetCell(x, y, new Cell(Color.Gray, new Cell.BorderStyle(-1, -1, Color.Black)));
                     } 
                 }
             }

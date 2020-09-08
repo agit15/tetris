@@ -25,6 +25,11 @@ namespace Tetris.Components
             if (cell != null)
             {
                 e.Graphics.FillRectangle(new SolidBrush(cell.color), e.CellBounds);
+
+                if (cell.borderStyle != null)
+                {
+                    SetBorder(e, cell.borderStyle.borderColor, cell.borderStyle.borderStyle, cell.borderStyle.borderHeight, cell.borderStyle.borderWidth);
+                }
             }
             else
             {
