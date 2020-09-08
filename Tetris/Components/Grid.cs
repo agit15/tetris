@@ -28,7 +28,8 @@ namespace Tetris.Components
             // Draw playground
             _playGround.Draw();
 
-            tableLayoutPanel.Invalidate();
+            // Render the grid
+            Render();
         }
 
         public Grid(int width, int height)
@@ -39,9 +40,23 @@ namespace Tetris.Components
             _cells = new Cell[width * height];
         }
 
+        /// <summary>
+        /// Draws the grid in memory.
+        /// </summary>
         public virtual void Draw()
         {
+            // Create border area
             CreateBorder();
+
+            _playGround.Draw();
+        }
+
+        /// <summary>
+        /// Draws the grid to the layout panel
+        /// </summary>
+        public void Render()
+        {
+            tableLayoutPanel.Refresh();
         }
 
         public void CreateBorder()
@@ -54,10 +69,6 @@ namespace Tetris.Components
                     {
                         SetCell(x, y, new Cell(Color.Gray));
                     } 
-                    else
-                    {
-                        SetCell(x, y, new Cell(Color.Transparent));
-                    }
                 }
             }
         }
@@ -65,7 +76,10 @@ namespace Tetris.Components
         public virtual void PaintCell(object sender, TableLayoutCellPaintEventArgs e)
         {
             var cell = GetCell(e.Column, e.Row);
-            e.Graphics.FillRectangle(new SolidBrush(cell.color), e.CellBounds);
+            if (cell != null)
+            {
+                e.Graphics.FillRectangle(new SolidBrush(cell.color), e.CellBounds);
+            }
             _playGround.PaintCell(sender, e);
         }
 
