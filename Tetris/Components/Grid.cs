@@ -7,7 +7,7 @@ namespace Tetris.Components
     {
         private readonly PlayGround _playGround;
         private readonly TableLayoutPanel tableLayoutPanel;
-        protected readonly Color[] _cells;
+        protected readonly Cell[] _cells;
         protected readonly int width;
         protected readonly int height;
 
@@ -20,7 +20,7 @@ namespace Tetris.Components
             width = this.tableLayoutPanel.ColumnCount;
             height = this.tableLayoutPanel.RowCount;
 
-            _cells = new Color[width * height];
+            _cells = new Cell[width * height];
 
             // Draw entire board
             Draw();
@@ -36,7 +36,7 @@ namespace Tetris.Components
             this.width = width;
             this.height = height;
 
-            _cells = new Color[width * height];
+            _cells = new Cell[width * height];
         }
 
         public virtual void Draw()
@@ -52,11 +52,11 @@ namespace Tetris.Components
                 {
                     if (y == 0 || x == 0 || y == height -1 || x == width - 1)
                     {
-                        SetCell(x, y, Color.Gray);
+                        SetCell(x, y, new Cell(Color.Gray));
                     } 
                     else
                     {
-                        SetCell(x, y, Color.Transparent);
+                        SetCell(x, y, new Cell(Color.Transparent));
                     }
                 }
             }
@@ -64,18 +64,19 @@ namespace Tetris.Components
 
         public virtual void PaintCell(object sender, TableLayoutCellPaintEventArgs e)
         {
-            e.Graphics.FillRectangle(new SolidBrush(GetCell(e.Column, e.Row)), e.CellBounds);
+            var cell = GetCell(e.Column, e.Row);
+            e.Graphics.FillRectangle(new SolidBrush(cell.color), e.CellBounds);
             _playGround.PaintCell(sender, e);
         }
 
-        public Color GetCell(int x, int y)
+        public Cell GetCell(int x, int y)
         {
             return _cells[y * width + x];
         }
 
-        public void SetCell(int x, int y, Color color)
+        public void SetCell(int x, int y, Cell cell)
         {
-            _cells[y * width + x] = color;
+            _cells[y * width + x] = cell;
         }
     }
 }

@@ -21,7 +21,7 @@ namespace Tetris.Components
             {
                 for (int y = 0; y < height; y++)
                 {
-                    SetCell(x, y, Color.Black);
+                    SetCell(x, y, new Cell(Color.Black));
                 }
             }
         }
@@ -33,7 +33,8 @@ namespace Tetris.Components
 
             if (e.Column == 0 || e.Row == 0) return;
             if (e.Row >= 21 || e.Column >= 11) return;
-            e.Graphics.FillRectangle(new SolidBrush(GetCell(col, row)), e.CellBounds);
+            var cell = GetCell(col, row);
+            e.Graphics.FillRectangle(new SolidBrush(cell.color), e.CellBounds);
         }
     }
 }
