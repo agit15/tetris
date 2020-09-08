@@ -27,6 +27,9 @@ namespace Tetris
 
             Grid = new Grid(GridBox, new PlayGround(GridBox.ColumnCount - 2, GridBox.RowCount - 2, GridBox));
 
+            SetDoubleBuffered(GridBox);
+            SetDoubleBuffered(NextGridBox);
+
             // Start game loop
             GameLoop.Start();
         }
