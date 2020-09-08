@@ -7,6 +7,7 @@ namespace Tetris.Components
     {
         private readonly PlayGround _playGround;
         private readonly TableLayoutPanel tableLayoutPanel;
+
         protected readonly Cell[] _cells;
         protected readonly int width;
         protected readonly int height;
@@ -59,13 +60,13 @@ namespace Tetris.Components
             tableLayoutPanel.Refresh();
         }
 
-        public void CreateBorder()
+        protected void CreateBorder()
         {
             for (int x = 0; x < width; x++)
             {
                 for (int y = 0; y < height; y++)
                 {
-                    if (y == 0 || x == 0 || y == height -1 || x == width - 1)
+                    if (x == 0 || y == 0 || x == width - 1 || y == height - 1)
                     {
                         SetCell(x, y, new Cell(Color.Gray));
                     } 

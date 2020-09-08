@@ -19,7 +19,7 @@ namespace Tetris.Components
             int row = e.Row - 1;
 
             if (e.Column == 0 || e.Row == 0) return;
-            if (e.Row >= 21 || e.Column >= 11) return;
+            if (e.Column >= width +1 || e.Row >= height + 1) return;
 
             var cell = GetCell(col, row);
             if (cell != null)
