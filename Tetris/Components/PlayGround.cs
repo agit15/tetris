@@ -5,13 +5,8 @@ namespace Tetris.Components
 {
     public class PlayGround : Grid
     {
-        public PlayGround(int width, int height) : base(width, height)
+        public PlayGround(int width, int height, TableLayoutPanel panel) : base(width, height, panel)
         { }
-
-        public override void Draw()
-        {
-            // Draws only on the play ground
-        }
 
         public override void PaintCell(object sender, TableLayoutCellPaintEventArgs e)
         {
@@ -34,6 +29,25 @@ namespace Tetris.Components
             else
             {
                 e.Graphics.FillRectangle(new SolidBrush(Color.Black), e.CellBounds);
+            }
+        }
+
+        public override void Reset()
+        {
+            for (int x = 0; x < width; x++)
+            {
+                for (int y = 0; y < height; y++)
+                {
+                    SetCell(x, y, null);
+                }
+            }
+        }
+
+        public void PaintTetromino(int x, int y, Tetromino tetromino)
+        {
+            foreach (var cell in tetromino.Cells)
+            {
+                SetCell(x + cell.Position.X, y + cell.Position.Y, new Cell(tetromino.Color));
             }
         }
     }

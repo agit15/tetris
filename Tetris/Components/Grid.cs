@@ -5,9 +5,11 @@ namespace Tetris.Components
 {
     public class Grid
     {
-        private readonly PlayGround _playGround;
+        public readonly PlayGround PlayGround;
+
         private readonly TableLayoutPanel tableLayoutPanel;
 
+        protected bool isDirty = false;
         protected readonly Cell[] _cells;
         protected readonly int width;
         protected readonly int height;
@@ -15,41 +17,28 @@ namespace Tetris.Components
         public Grid(TableLayoutPanel tableLayoutPanel, PlayGround playGround)
         {
             this.tableLayoutPanel = tableLayoutPanel;
-
-            _playGround = playGround;
-
             width = this.tableLayoutPanel.ColumnCount;
             height = this.tableLayoutPanel.RowCount;
-
             _cells = new Cell[width * height];
+            PlayGround = playGround;
 
-            // Draw entire board
-            Draw();
-
-            // Draw playground
-            _playGround.Draw();
-
-            // Render the grid
-            Render();
+            // Setup initial grid data
+            InitializeGrid();
         }
 
-        public Grid(int width, int height)
+        public Grid(int width, int height, TableLayoutPanel tableLayoutPanel)
         {
+            this.tableLayoutPanel = tableLayoutPanel;
             this.width = width;
             this.height = height;
 
             _cells = new Cell[width * height];
         }
 
-        /// <summary>
-        /// Draws the grid in memory.
-        /// </summary>
-        public virtual void Draw()
+        private void InitializeGrid()
         {
             // Create border area
             CreateBorder();
-
-            _playGround.Draw();
         }
 
         /// <summary>
@@ -57,7 +46,9 @@ namespace Tetris.Components
         /// </summary>
         public void Render()
         {
+            if (!isDirty) return;
             tableLayoutPanel.Refresh();
+            isDirty = false;
         }
 
         protected void CreateBorder()
@@ -74,6 +65,24 @@ namespace Tetris.Components
             }
         }
 
+        public virtual void Reset()
+        {
+            for (int x = 0; x < width; x++)
+            {
+                for (int y = 0; y < height; y++)
+                {
+                    if (x == 0 || y == 0 || x == width - 1 || y == height - 1)
+                    {
+                        SetCell(x, y, new Cell(Color.Gray));
+                    }
+                    else
+                    {
+                        SetCell(x, y, null);
+                    }
+                }
+            }
+        }
+
         public virtual void PaintCell(object sender, TableLayoutCellPaintEventArgs e)
         {
             var cell = GetCell(e.Column, e.Row);
@@ -86,7 +95,7 @@ namespace Tetris.Components
                     SetBorder(e, cell.borderStyle.borderColor, cell.borderStyle.borderStyle, cell.borderStyle.borderHeight, cell.borderStyle.borderWidth);
                 }
             }
-            _playGround.PaintCell(sender, e);
+            PlayGround.PaintCell(sender, e);
         }
 
         protected void SetBorder(TableLayoutCellPaintEventArgs e, Color color, ButtonBorderStyle borderStyle, int height, int width)
@@ -102,8 +111,25 @@ namespace Tetris.Components
         }
 
         public void SetCell(int x, int y, Cell cell)
-        { 
+        {
+            var prev = _cells[y * width + x];
             _cells[y * width + x] = cell;
+            
+            if (prev == null && cell != null)
+            {
+                isDirty = true;
+            }
+            else if (prev != null && cell == null)
+            {
+                isDirty = true;
+            }
+            else if (prev == null && cell == null)
+            {
+            }
+            else if (!isDirty)
+            {
+                isDirty = prev.color.Equals(cell.color);
+            }
         }
     }
 }

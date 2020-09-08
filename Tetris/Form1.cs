@@ -1,12 +1,14 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
 using Tetris.Components;
 
 namespace Tetris
 {
     public partial class Form1 : Form
     {
-        public Grid Grid;
-        public PlayGround PlayGround;
+        private Grid Grid;
+        private Random _random;
+        private Tetromino[] tetrominos;
 
         public Form1()
         {
@@ -20,10 +22,23 @@ namespace Tetris
 
         private void Form1_Load(object sender, System.EventArgs e)
         {
-            PlayGround = new PlayGround(tableLayoutPanel1.ColumnCount - 2, tableLayoutPanel1.RowCount - 2);
-            Grid = new Grid(tableLayoutPanel1, PlayGround);
-            Grid.Draw();
-            Grid.Render();
+            _random = new Random();
+            tetrominos = Tetromino.ListAll();
+
+            Grid = new Grid(GridBox, new PlayGround(GridBox.ColumnCount - 2, GridBox.RowCount - 2, GridBox));
+
+            // Start game loop
+            GameLoop.Start();
+        }
+
+        private void GameLoop_Tick(object sender, EventArgs e)
+        {
+            // TEST DATA
+            // TODO: REMOVE THIS PART
+            // Paint a random tetromino every tick
+            Grid.PlayGround.Reset();
+            Grid.PlayGround.PaintTetromino(5, 10, tetrominos[_random.Next(0, tetrominos.Length)]);
+            Grid.PlayGround.Render();
         }
     }
 }
