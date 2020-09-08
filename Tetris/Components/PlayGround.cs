@@ -47,7 +47,7 @@ namespace Tetris.Components
         {
             foreach (var cell in tetromino.Cells)
             {
-                SetCell(x + cell.Position.X, y + cell.Position.Y, new Cell(tetromino.Color));
+                SetCell(x + cell.Position.X, y + cell.Position.Y, new Cell(tetromino.Color, new Cell.BorderStyle(-1, -1, Color.Black)));
             }
         }
     }
