@@ -24,8 +24,9 @@ namespace Tetris.Components
             }
         }
 
-        public Cell(Color color) 
+        public Cell(Color color, BorderStyle borderStyle = null) 
         {
+            this.borderStyle = borderStyle;
             this.color = color;
         }
     }

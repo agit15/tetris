@@ -7,6 +7,7 @@ namespace Tetris.Components
     {
         private readonly PlayGround _playGround;
         private readonly TableLayoutPanel tableLayoutPanel;
+        private readonly Cell borderCell = new Cell(Color.Gray, new Cell.BorderStyle(-1, -1, Color.Black));
 
         protected readonly Cell[] _cells;
         protected readonly int width;
@@ -68,7 +69,7 @@ namespace Tetris.Components
                 {
                     if (x == 0 || y == 0 || x == width - 1 || y == height - 1)
                     {
-                        SetCell(x, y, new Cell(Color.Gray));
+                        SetCell(x, y, borderCell);
                     } 
                 }
             }
@@ -80,8 +81,20 @@ namespace Tetris.Components
             if (cell != null)
             {
                 e.Graphics.FillRectangle(new SolidBrush(cell.color), e.CellBounds);
+
+                if(cell.borderStyle != null)
+                {
+                    SetBorder(e, cell.borderStyle.borderColor, cell.borderStyle.borderStyle, cell.borderStyle.borderHeight, cell.borderStyle.borderWidth);
+                }
             }
             _playGround.PaintCell(sender, e);
+        }
+
+        protected void SetBorder(TableLayoutCellPaintEventArgs e, Color color, ButtonBorderStyle borderStyle, int height, int width)
+        {
+            var rectangle = e.CellBounds;
+            rectangle.Inflate(width, height);
+            ControlPaint.DrawBorder(e.Graphics, rectangle, color, borderStyle);
         }
 
         public Cell GetCell(int x, int y)
@@ -90,7 +103,7 @@ namespace Tetris.Components
         }
 
         public void SetCell(int x, int y, Cell cell)
-        {
+        { 
             _cells[y * width + x] = cell;
         }
     }
