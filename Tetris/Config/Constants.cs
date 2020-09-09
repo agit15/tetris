@@ -25,8 +25,8 @@ namespace Tetris.Config
             },
             { Color.Orange, new string[]
                 {
-                    "0001",
-                    "0111"
+                    "0010",
+                    "1110"
                 }
             },
             { Color.Yellow, new string[]
@@ -43,8 +43,8 @@ namespace Tetris.Config
             },
             { Color.Green, new string[]
                 {
-                    "0011",
-                    "0110"
+                    "0110",
+                    "1100"
                 }
             },
             { Color.Magenta, new string[]
