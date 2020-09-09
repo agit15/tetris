@@ -99,7 +99,7 @@
             // 
             // GameLoop
             // 
-            this.GameLoop.Interval = 1000;
+            this.GameLoop.Interval = 250;
             this.GameLoop.Tick += new System.EventHandler(this.GameLoop_Tick);
             // 
             // Form1

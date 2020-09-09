@@ -1,10 +1,13 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace Tetris.Components
 {
-    public class Cell
+    public class Cell : IEquatable<Cell>
     {
+        public Point Position;
         public Color color;
         public BorderStyle borderStyle;
 
@@ -24,10 +27,16 @@ namespace Tetris.Components
             }
         }
 
-        public Cell(Color color, BorderStyle borderStyle = null) 
+        public Cell(Point position, Color color, BorderStyle borderStyle = null) 
         {
+            Position = position;
             this.borderStyle = borderStyle;
             this.color = color;
+        }
+
+        public bool Equals(Cell other)
+        {
+            return other != null && other.Position.X == Position.X && other.Position.Y == Position.Y;
         }
     }
 }

@@ -8,6 +8,7 @@ namespace Tetris.Config
         public static Color DefaultBorderColor = Color.Gray;
         public static Color TetrominoBorderColor = Color.Black;
         public static Color DefaultBackGround = Color.Black;
+        public static Point TetrominoSpawnPosition = new Point(3, 0);
 
         public static Dictionary<Color, string[]> TetrominoPatterns = new Dictionary<Color, string[]>
         {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using Tetris.Components;
+using Tetris.Config;
 
 namespace Tetris
 {
@@ -36,11 +37,29 @@ namespace Tetris
 
         private void GameLoop_Tick(object sender, EventArgs e)
         {
-            // TEST DATA
-            // TODO: REMOVE THIS PART
-            // Paint a random tetromino every tick
-            Grid.PlayGround.ClearTetromino();
-            Grid.PlayGround.PaintTetromino(3, 0, tetrominos[_random.Next(0, tetrominos.Length)]);
+            if (!Grid.PlayGround.IsAlive)
+            {
+                var tetronimo = tetrominos[_random.Next(0, tetrominos.Length)];
+                if (!Grid.PlayGround.IsValidTetrominoPosition(Constants.TetrominoSpawnPosition.X, Constants.TetrominoSpawnPosition.Y, tetronimo))
+                {
+                    // Game over?
+                    GameLoop.Stop();
+                    return;
+                }
+                else
+                {
+                    // Paint a random tetromino at spawn location
+                    Grid.PlayGround.PaintTetromino(Constants.TetrominoSpawnPosition, tetronimo);
+                }
+            }
+            else
+            {
+                if (!Grid.PlayGround.MoveTetromino(Direction.Down))
+                {
+                    Grid.PlayGround.ClearTetromino(false);
+                }
+            }
+
             Grid.Render();
         }
 

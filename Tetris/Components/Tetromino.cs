@@ -10,10 +10,13 @@ namespace Tetris.Components
         public Color Color;
         public Point[] Positions;
 
+        public List<Cell> Cells;
+
         public Tetromino(Color color, Point[] positions)
         {
             Color = color;
             Positions = positions;
+            Cells = new List<Cell>();
         }
 
         public static Tetromino[] ListAll()
