@@ -64,13 +64,16 @@ namespace Tetris.Components
             _currentTetromino = new KeyValuePair<Point, Tetromino>(new Point(x, y), tetromino);
         }
 
-        public void ClearTetromino()
+        public void ClearTetromino(bool clearCells = true)
         {
             if (_currentTetromino != null)
             {
-                foreach (var position in _currentTetromino.Value.Value.Positions)
+                if (clearCells)
                 {
-                    SetCell(_currentTetromino.Value.Key.X + position.X, _currentTetromino.Value.Key.Y + position.Y, null);
+                    foreach (var position in _currentTetromino.Value.Value.Positions)
+                    {
+                        SetCell(_currentTetromino.Value.Key.X + position.X, _currentTetromino.Value.Key.Y + position.Y, null);
+                    }
                 }
                 _currentTetromino = null;
             }
