@@ -22,8 +22,8 @@ namespace Tetris.Components
             _cells = new Cell[width * height];
             PlayGround = playGround;
 
-            // Setup initial grid data
-            InitializeGrid();
+            // Reset to it's default state
+            Reset();
         }
 
         public Grid(int width, int height, TableLayoutPanel tableLayoutPanel)
@@ -33,12 +33,6 @@ namespace Tetris.Components
             this.height = height;
 
             _cells = new Cell[width * height];
-        }
-
-        private void InitializeGrid()
-        {
-            // Create border area
-            CreateBorder();
         }
 
         /// <summary>
@@ -52,20 +46,6 @@ namespace Tetris.Components
             if (!isDirty) return;
             tableLayoutPanel.Refresh();
             isDirty = false;
-        }
-
-        protected void CreateBorder()
-        {
-            for (int x = 0; x < width; x++)
-            {
-                for (int y = 0; y < height; y++)
-                {
-                    if (x == 0 || y == 0 || x == width - 1 || y == height - 1)
-                    {
-                        SetCell(x, y, new Cell(Color.Gray, new Cell.BorderStyle(-1, -1, Color.Black)));
-                    } 
-                }
-            }
         }
 
         public virtual void Reset()
