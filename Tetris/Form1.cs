@@ -39,7 +39,7 @@ namespace Tetris
             // TEST DATA
             // TODO: REMOVE THIS PART
             // Paint a random tetromino every tick
-            Grid.PlayGround.Reset();
+            Grid.PlayGround.ClearTetromino();
             Grid.PlayGround.PaintTetromino(5, 10, tetrominos[_random.Next(0, tetrominos.Length)]);
             Grid.Render();
         }
