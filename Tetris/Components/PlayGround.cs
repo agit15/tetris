@@ -52,9 +52,9 @@ namespace Tetris.Components
 
         public void PaintTetromino(int x, int y, Tetromino tetromino)
         {
-            foreach (var cell in tetromino.Cells)
+            foreach (var position in tetromino.Positions)
             {
-                SetCell(x + cell.Position.X, y + cell.Position.Y, new Cell(tetromino.Color, new Cell.BorderStyle(-1, -1, Color.Black)));
+                SetCell(x + position.X, y + position.Y, new Cell(tetromino.Color, new Cell.BorderStyle(-1, -1, Color.Black)));
             }
         }
     }

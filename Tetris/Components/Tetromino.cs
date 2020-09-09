@@ -7,22 +7,12 @@ namespace Tetris.Components
     public class Tetromino
     {
         public Color Color;
-        public TetrominoCell[] Cells;
+        public Point[] Positions;
 
-        public Tetromino(Color color, TetrominoCell[] cells)
+        public Tetromino(Color color, Point[] positions)
         {
             Color = color;
-            Cells = cells;
-        }
-
-        public struct TetrominoCell
-        {
-            public Point Position;
-
-            public TetrominoCell(Point position)
-            {
-                Position = position;
-            }
+            Positions = positions;
         }
 
         public static Tetromino[] ListAll()
@@ -31,13 +21,13 @@ namespace Tetris.Components
             foreach (var pattern in Constants.TetrominoPatterns)
             {
                 int row = 0;
-                var cells = new List<TetrominoCell>();
+                var cells = new List<Point>();
                 foreach (var line in pattern.Value)
                 {
                     for (int i=0; i < line.Length; i++)
                     {
                         if (line[i] == '0') continue;
-                        cells.Add(new TetrominoCell(new Point(i, row)));
+                        cells.Add(new Point(i, row));
                     }
                     row++;
                 }
