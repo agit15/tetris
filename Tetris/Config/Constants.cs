@@ -5,6 +5,10 @@ namespace Tetris.Config
 {
     public static class Constants
     {
+        public static Color DefaultBorderColor = Color.DarkSlateGray;
+        public static Color TetrominoBorderColor = Color.Black;
+        public static Color DefaultBackGround = Color.Black;
+
         public static Dictionary<Color, string[]> TetrominoPatterns = new Dictionary<Color, string[]>
         {
             { Color.Cyan, new string[]

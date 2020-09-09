@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
+using Tetris.Config;
 
 namespace Tetris.Components
 {
@@ -56,7 +57,7 @@ namespace Tetris.Components
                 {
                     if (x == 0 || y == 0 || x == width - 1 || y == height - 1)
                     {
-                        SetCell(x, y, new Cell(Color.Gray));
+                        SetCell(x, y, new Cell(Constants.DefaultBorderColor));
                     }
                     else
                     {
@@ -90,11 +91,14 @@ namespace Tetris.Components
 
         public Cell GetCell(int x, int y)
         {
+            if (!InBounds(x, y)) return null;
             return _cells[y * width + x];
         }
 
         public void SetCell(int x, int y, Cell cell)
         {
+            if (!InBounds(x, y)) return;
+
             var prev = _cells[y * width + x];
             _cells[y * width + x] = cell;
             
@@ -114,6 +118,11 @@ namespace Tetris.Components
             {
                 isDirty = prev.color.Equals(cell.color);
             }
+        }
+
+        protected bool InBounds(int x, int y)
+        {
+            return x >= 0 && y >= 0 && x < width && y < height;
         }
     }
 }

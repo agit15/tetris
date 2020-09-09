@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using Tetris.Config;
 
 namespace Tetris.Components
 {
@@ -32,7 +33,7 @@ namespace Tetris.Components
             }
             else
             {
-                e.Graphics.FillRectangle(new SolidBrush(Color.Black), e.CellBounds);
+                e.Graphics.FillRectangle(new SolidBrush(Constants.DefaultBackGround), e.CellBounds);
             }
         }
 
@@ -58,7 +59,7 @@ namespace Tetris.Components
         {
             foreach (var position in tetromino.Positions)
             {
-                SetCell(x + position.X, y + position.Y, new Cell(tetromino.Color, new Cell.BorderStyle(-1, -1, Color.Black)));
+                SetCell(x + position.X, y + position.Y, new Cell(tetromino.Color, new Cell.BorderStyle(-1, -1, Constants.TetrominoBorderColor)));
             }
             _currentTetromino = new KeyValuePair<Point, Tetromino>(new Point(x, y), tetromino);
         }

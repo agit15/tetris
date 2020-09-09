@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using Tetris.Config;
 
 namespace Tetris.Components
@@ -22,7 +23,7 @@ namespace Tetris.Components
             {
                 int row = 0;
                 var cells = new List<Point>();
-                foreach (var line in pattern.Value)
+                foreach (var line in pattern.Value.Reverse())
                 {
                     for (int i=0; i < line.Length; i++)
                     {
