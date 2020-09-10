@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using Tetris.Config;
@@ -19,9 +20,38 @@ namespace Tetris.Components
             Cells = new List<Cell>();
         }
 
+        public void Normalize()
+        {
+            int lowestPositionX = int.MaxValue;
+            int lowestPositionY = int.MaxValue;
+            foreach (var position in Positions)
+            {
+                if (lowestPositionX > position.X)
+                    lowestPositionX = position.X;
+                if (lowestPositionY > position.Y)
+                    lowestPositionY = position.Y;
+            }
+
+            if (lowestPositionX != 0 && lowestPositionY != 0)
+            {
+                var smaller = new int[] { lowestPositionX, lowestPositionY }.Min();
+                var difference = Math.Abs(0 - smaller);
+
+                var newPositions = new List<Point>();
+                foreach (var pos in Positions)
+                {
+                    newPositions.Add(new Point(pos.X - difference, pos.Y - difference));
+                }
+
+                Positions = newPositions.ToArray();
+            }
+        }
+
         public Tetromino Clone()
         {
-            return new Tetromino(Color, Positions);
+            var t = new Tetromino(Color, Positions);
+            t.Cells.AddRange(Cells);
+            return t;
         }
 
         public static Tetromino[] ListAll()

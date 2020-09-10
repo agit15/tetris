@@ -20,8 +20,8 @@ namespace Tetris.Config
             },
             { Color.Blue, new string[]
                 {
-                    "0100",
-                    "0111"
+                    "1000",
+                    "1110"
                 }
             },
             { Color.Orange, new string[]
@@ -32,14 +32,14 @@ namespace Tetris.Config
             },
             { Color.Yellow, new string[]
                 {
-                    "0110",
-                    "0110"
+                    "1100",
+                    "1100"
                 }
             },
             { Color.Red, new string[]
                 {
-                    "0110",
-                    "0011"
+                    "1100",
+                    "0110"
                 }
             },
             { Color.Green, new string[]
@@ -50,8 +50,8 @@ namespace Tetris.Config
             },
             { Color.Magenta, new string[]
                 {
-                    "0010",
-                    "0111"
+                    "0100",
+                    "1110"
                 }
             }
         };

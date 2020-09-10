@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -7,6 +6,7 @@ namespace Tetris.Components
 {
     public class Cell : IEquatable<Cell>
     {
+        public Tetromino Occupier;
         public Point Position;
         public Color color;
         public BorderStyle borderStyle;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 using Tetris.Components;
 using Tetris.Config;
@@ -60,6 +61,9 @@ namespace Tetris
                     // If we have collided, we clear the tetronimo from the memory
                     // But we make sure not the clear the cells.
                     Grid.PlayGround.ClearTetromino(false);
+
+                    // Check if we completed a line
+                    Grid.PlayGround.CheckLineCompletion();
                 }
             }
 
@@ -86,5 +90,55 @@ namespace Tetris
             }
         }
         #endregion
+
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (!Grid.PlayGround.IsFalling) return;
+            if (e.KeyCode == Keys.Left || e.KeyCode == Keys.Q)
+            {
+                if (!Grid.PlayGround.MoveTetromino(Direction.Left)) return;
+                Grid.Render();
+            }
+            else if (e.KeyCode == Keys.Right || e.KeyCode == Keys.D)
+            {
+                if (!Grid.PlayGround.MoveTetromino(Direction.Right)) return;
+                Grid.Render();
+            }
+            else if (e.KeyCode == Keys.Down || e.KeyCode == Keys.S)
+            {
+                if (!Grid.PlayGround.MoveTetromino(Direction.Down)) return;
+                Grid.Render();
+            }
+            else if (e.KeyCode == Keys.Up || e.KeyCode == Keys.Z)
+            {
+                // Rotate tetromino
+                var currentPos = Grid.PlayGround.TetronimoPosition;
+                var orig = Grid.PlayGround.Tetronimo;
+                var tetromino = Grid.PlayGround.Tetronimo.Clone();
+
+                Grid.PlayGround.ClearTetromino(true);
+                Grid.PlayGround.RotateTetromino90CounterClockwise(tetromino);
+                tetromino.Cells.Clear();
+                // Correct tetromino cells
+                foreach (var position in tetromino.Positions)
+                {
+                    tetromino.Cells.Add(new Cell(new Point(currentPos.X + position.X, currentPos.Y + position.Y), Color.Transparent));
+                }
+
+                if (Grid.PlayGround.IsValidTetrominoPosition(currentPos.X, currentPos.Y, tetromino))
+                {
+                    Grid.PlayGround.PaintTetromino(currentPos, tetromino);
+                    Grid.Render();
+                }
+                else
+                {
+                    // Repaint the original again
+                    Grid.PlayGround.PaintTetromino(currentPos, orig);
+
+                    // We don't need to render, because nothing changed
+                }
+            }
+            e.Handled = true;
+        }
     }
 }
