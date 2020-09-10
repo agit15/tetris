@@ -37,9 +37,9 @@ namespace Tetris
 
         private void GameLoop_Tick(object sender, EventArgs e)
         {
-            if (!Grid.PlayGround.IsAlive)
+            if (!Grid.PlayGround.IsFalling)
             {
-                var tetronimo = tetrominos[_random.Next(0, tetrominos.Length)];
+                var tetronimo = tetrominos[_random.Next(0, tetrominos.Length)].Clone();
                 if (!Grid.PlayGround.IsValidTetrominoPosition(Constants.TetrominoSpawnPosition.X, Constants.TetrominoSpawnPosition.Y, tetronimo))
                 {
                     // Game over?
@@ -54,8 +54,11 @@ namespace Tetris
             }
             else
             {
+                // Move tetronimo downwards 1 line
                 if (!Grid.PlayGround.MoveTetromino(Direction.Down))
                 {
+                    // If we have collided, we clear the tetronimo from the memory
+                    // But we make sure not the clear the cells.
                     Grid.PlayGround.ClearTetromino(false);
                 }
             }

@@ -10,7 +10,7 @@ namespace Tetris.Components
     {
         private KeyValuePair<Point, Tetromino>? _currentTetromino;
 
-        public bool IsAlive { get { return _currentTetromino != null; } }
+        public bool IsFalling { get { return _currentTetromino != null; } }
 
         public PlayGround(int width, int height, TableLayoutPanel panel) : base(width, height, panel)
         { }
@@ -119,9 +119,8 @@ namespace Tetris.Components
                     {
                         SetCell(_currentTetromino.Value.Key.X + position.X, _currentTetromino.Value.Key.Y + position.Y, null);
                     }
+                    _currentTetromino.Value.Value.Cells.Clear();
                 }
-                // Cells must reset always as the objects are shared
-                _currentTetromino.Value.Value.Cells.Clear();
                 _currentTetromino = null;
             }
         }

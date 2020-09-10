@@ -19,6 +19,11 @@ namespace Tetris.Components
             Cells = new List<Cell>();
         }
 
+        public Tetromino Clone()
+        {
+            return new Tetromino(Color, Positions);
+        }
+
         public static Tetromino[] ListAll()
         {
             var tetrominos = new List<Tetromino>();
