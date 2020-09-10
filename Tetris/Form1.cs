@@ -117,13 +117,7 @@ namespace Tetris
                 var tetromino = Grid.PlayGround.Tetronimo.Clone();
 
                 Grid.PlayGround.ClearTetromino(true);
-                Grid.PlayGround.RotateTetromino90CounterClockwise(tetromino);
-                tetromino.Cells.Clear();
-                // Correct tetromino cells
-                foreach (var position in tetromino.Positions)
-                {
-                    tetromino.Cells.Add(new Cell(new Point(currentPos.X + position.X, currentPos.Y + position.Y), Color.Transparent));
-                }
+                Grid.PlayGround.RotateTetromino90CounterClockwise(tetromino, currentPos);
 
                 if (Grid.PlayGround.IsValidTetrominoPosition(currentPos.X, currentPos.Y, tetromino))
                 {

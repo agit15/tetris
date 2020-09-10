@@ -75,13 +75,21 @@ namespace Tetris.Components
             return newMatrix;
         }
 
-        public void RotateTetromino90CounterClockwise(Tetromino tetromino)
+        public void RotateTetromino90CounterClockwise(Tetromino tetromino, Point currentPosition)
         {
             var arr = ConvertToMultiDimensionalArray(tetromino.Positions);
             var cArr = RotateMatrixCounterClockwise(arr);
             var normalArr = ConvertToNormalArray(cArr);
             tetromino.Positions = normalArr;
             tetromino.Normalize();
+
+            // Reset cells correctly
+            tetromino.Cells.Clear();
+            // Correct tetromino cells
+            foreach (var position in tetromino.Positions)
+            {
+                tetromino.Cells.Add(new Cell(new Point(currentPosition.X + position.X, currentPosition.Y + position.Y), Color.Transparent));
+            }
         }
 
         private void ShiftAllValidCellsDown(int openLine)
