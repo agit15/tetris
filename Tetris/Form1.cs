@@ -32,6 +32,11 @@ namespace Tetris
             _nextSlot = new PreviewGrid(4, 2, NextGridBox);
             Grid = new Grid(GridBox, new PlayGround(GridBox.ColumnCount - 2, GridBox.RowCount - 2, GridBox));
 
+            // Set default text
+            LinesBox.Text = "0";
+            ScoreBox.Text = "0";
+            LevelBox.Text = "0";
+
             SetDoubleBuffered(GridBox);
             SetDoubleBuffered(NextGridBox);
 
@@ -67,8 +72,11 @@ namespace Tetris
         private void GameLoop_Tick(object sender, EventArgs e)
         {
             if (_isPaused) return;
+
             if (!Grid.PlayGround.IsFalling)
             {
+                GameLoop.Interval = 1000 - (int.Parse(LevelBox.Text) * 50);
+
                 SpawnNextTetrimono();
             }
             else
@@ -82,6 +90,11 @@ namespace Tetris
 
                     // Check if we completed a line
                     Grid.PlayGround.CheckLineCompletion();
+
+                    // Update text
+                    LinesBox.Text = Grid.PlayGround.LinesScored.ToString();
+                    ScoreBox.Text = Grid.PlayGround.Score.ToString();
+                    LevelBox.Text = Grid.PlayGround.Level.ToString();
                 }
             }
 
@@ -141,6 +154,11 @@ namespace Tetris
 
                     // Check if we completed a line
                     Grid.PlayGround.CheckLineCompletion();
+
+                    // Update text
+                    LinesBox.Text = Grid.PlayGround.LinesScored.ToString();
+                    ScoreBox.Text = Grid.PlayGround.Score.ToString();
+                    LevelBox.Text = Grid.PlayGround.Level.ToString();
 
                     // Spawn the next
                     SpawnNextTetrimono();

@@ -10,6 +10,17 @@ namespace Tetris.Config
         public static Color DefaultBackGround = Color.Black;
         public static Point TetrominoSpawnPosition = new Point(3, 0);
 
+        public static Dictionary<Color, int> PointsPerColor = new Dictionary<Color, int>
+        {
+            { Color.Cyan, 6 },
+            { Color.Blue, 8 },
+            { Color.Orange, 7 },
+            { Color.Yellow, 6 },
+            { Color.Red, 5 },
+            { Color.Green, 8 },
+            { Color.Magenta, 9 }
+        };
+
         public static Dictionary<Color, string[]> TetrominoPatterns = new Dictionary<Color, string[]>
         {
             { Color.Cyan, new string[]

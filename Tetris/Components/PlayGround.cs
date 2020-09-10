@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -11,6 +12,8 @@ namespace Tetris.Components
         protected KeyValuePair<Point, Tetromino>? _currentTetromino;
 
         public bool IsFalling { get { return _currentTetromino != null; } }
+
+        public int LinesScored, Level, Score;
 
         public PlayGround(int width, int height, TableLayoutPanel panel) : base(width, height, panel)
         { }
@@ -132,11 +135,17 @@ namespace Tetris.Components
                 }
                 if (lineComplete)
                 {
+                    int score = 0;
                     for (int x = 0; x < width; x++)
                     {
+                        score += Constants.PointsPerColor[GetCell(x, y).color];
                         SetCell(x, y, null);
                     }
                     updated = true;
+
+                    LinesScored++;
+                    Score += score;
+                    Level = (int)Math.Round((Score / 100f) * 0.3f);
                 }
             }
             return updated;
@@ -287,7 +296,7 @@ namespace Tetris.Components
         {
             if (!InBounds(x, y)) return false;
             var targetCell = GetCell(x, y);
-            if (targetCell != null && !tetromino.Cells.Any(a => a.Equals(targetCell) && a.Occupier.Equals(targetCell.Occupier)))
+            if (targetCell != null && !tetromino.Cells.Any(a => a.Equals(targetCell) && a.Occupier != null && a.Occupier.Equals(targetCell.Occupier)))
             {
                 return false;
             }
@@ -295,7 +304,7 @@ namespace Tetris.Components
             {
                 if (!InBounds(x + position.X, y + position.Y)) return false;
                 var cell = GetCell(x + position.X, y + position.Y);
-                if (cell != null && !tetromino.Cells.Any(a => a.Equals(cell) && a.Occupier.Equals(cell.Occupier)))
+                if (cell != null && !tetromino.Cells.Any(a => a.Equals(cell) && a.Occupier != null && a.Occupier.Equals(cell.Occupier)))
                 {
                     return false;
                 }

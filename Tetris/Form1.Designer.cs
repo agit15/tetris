@@ -38,8 +38,8 @@
             this.PointsBox = new System.Windows.Forms.Label();
             this.ScoreBox = new System.Windows.Forms.TextBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
-            this.LinesBox = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.LinesLabel = new System.Windows.Forms.Label();
+            this.LinesBox = new System.Windows.Forms.TextBox();
             this.PauseButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
@@ -175,27 +175,27 @@
             this.textBox2.TabIndex = 3;
             this.textBox2.TabStop = false;
             // 
+            // LinesLabel
+            // 
+            this.LinesLabel.AutoSize = true;
+            this.LinesLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.LinesLabel.Location = new System.Drawing.Point(421, 282);
+            this.LinesLabel.Name = "LinesLabel";
+            this.LinesLabel.Size = new System.Drawing.Size(53, 21);
+            this.LinesLabel.TabIndex = 2;
+            this.LinesLabel.Text = "Lines:";
+            // 
             // LinesBox
             // 
-            this.LinesBox.AutoSize = true;
-            this.LinesBox.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.LinesBox.Location = new System.Drawing.Point(421, 282);
+            this.LinesBox.CausesValidation = false;
+            this.LinesBox.Cursor = System.Windows.Forms.Cursors.Default;
+            this.LinesBox.Location = new System.Drawing.Point(421, 306);
             this.LinesBox.Name = "LinesBox";
-            this.LinesBox.Size = new System.Drawing.Size(53, 21);
-            this.LinesBox.TabIndex = 2;
-            this.LinesBox.Text = "Lines:";
-            // 
-            // textBox1
-            // 
-            this.textBox1.CausesValidation = false;
-            this.textBox1.Cursor = System.Windows.Forms.Cursors.Default;
-            this.textBox1.Location = new System.Drawing.Point(421, 306);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(120, 23);
-            this.textBox1.TabIndex = 3;
-            this.textBox1.TabStop = false;
-            this.textBox1.Enter += new System.EventHandler(this.Textbox_Enter);
+            this.LinesBox.ReadOnly = true;
+            this.LinesBox.Size = new System.Drawing.Size(120, 23);
+            this.LinesBox.TabIndex = 3;
+            this.LinesBox.TabStop = false;
+            this.LinesBox.Enter += new System.EventHandler(this.Textbox_Enter);
             // 
             // PauseButton
             // 
@@ -214,8 +214,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(580, 719);
             this.Controls.Add(this.PauseButton);
-            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.LinesBox);
+            this.Controls.Add(this.LinesLabel);
             this.Controls.Add(this.ScoreBox);
             this.Controls.Add(this.PointsBox);
             this.Controls.Add(this.LevelBox);
@@ -245,8 +245,8 @@
         private System.Windows.Forms.Label PointsBox;
         private System.Windows.Forms.TextBox ScoreBox;
         private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.Label LinesBox;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label LinesLabel;
+        private System.Windows.Forms.TextBox LinesBox;
         private System.Windows.Forms.Button PauseButton;
     }
 }
