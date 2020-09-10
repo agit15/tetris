@@ -36,22 +36,27 @@ namespace Tetris
             GameLoop.Start();
         }
 
+        private void SpawnNextTetrimono()
+        {
+            var tetronimo = tetrominos[_random.Next(0, tetrominos.Length)].Clone();
+            if (!Grid.PlayGround.IsValidTetrominoPosition(Constants.TetrominoSpawnPosition.X, Constants.TetrominoSpawnPosition.Y, tetronimo))
+            {
+                // Game over?
+                GameLoop.Stop();
+                return;
+            }
+            else
+            {
+                // Paint a random tetromino at spawn location
+                Grid.PlayGround.PaintTetromino(Constants.TetrominoSpawnPosition, tetronimo);
+            }
+        }
+
         private void GameLoop_Tick(object sender, EventArgs e)
         {
             if (!Grid.PlayGround.IsFalling)
             {
-                var tetronimo = tetrominos[_random.Next(0, tetrominos.Length)].Clone();
-                if (!Grid.PlayGround.IsValidTetrominoPosition(Constants.TetrominoSpawnPosition.X, Constants.TetrominoSpawnPosition.Y, tetronimo))
-                {
-                    // Game over?
-                    GameLoop.Stop();
-                    return;
-                }
-                else
-                {
-                    // Paint a random tetromino at spawn location
-                    Grid.PlayGround.PaintTetromino(Constants.TetrominoSpawnPosition, tetronimo);
-                }
+                SpawnNextTetrimono();
             }
             else
             {
@@ -106,7 +111,18 @@ namespace Tetris
             }
             else if (e.KeyCode == Keys.Down || e.KeyCode == Keys.S)
             {
-                if (!Grid.PlayGround.MoveTetromino(Direction.Down)) return;
+                if (!Grid.PlayGround.MoveTetromino(Direction.Down))
+                {
+                    // If we have collided, we clear the tetronimo from the memory
+                    // But we make sure not the clear the cells.
+                    Grid.PlayGround.ClearTetromino(false);
+
+                    // Check if we completed a line
+                    Grid.PlayGround.CheckLineCompletion();
+
+                    // Spawn the next
+                    SpawnNextTetrimono();
+                }
                 Grid.Render();
             }
             else if (e.KeyCode == Keys.Up || e.KeyCode == Keys.Z)
