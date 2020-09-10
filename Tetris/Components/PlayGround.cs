@@ -8,7 +8,7 @@ namespace Tetris.Components
 {
     public class PlayGround : Grid
     {
-        private KeyValuePair<Point, Tetromino>? _currentTetromino;
+        protected KeyValuePair<Point, Tetromino>? _currentTetromino;
 
         public bool IsFalling { get { return _currentTetromino != null; } }
 
@@ -213,7 +213,7 @@ namespace Tetris.Components
             return newPositions.ToArray();
         }
 
-        public void PaintTetromino(int x, int y, Tetromino tetromino)
+        public virtual void PaintTetromino(int x, int y, Tetromino tetromino)
         {
             tetromino.Cells.Clear();
             foreach (var position in tetromino.Positions)
@@ -267,7 +267,7 @@ namespace Tetris.Components
             return false;
         }
 
-        public void ClearTetromino(bool clearCells = true)
+        public virtual void ClearTetromino(bool clearCells = true)
         {
             if (_currentTetromino != null)
             {

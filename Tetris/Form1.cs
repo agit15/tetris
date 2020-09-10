@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 using System.Windows.Forms;
 using Tetris.Components;
 using Tetris.Config;
@@ -11,6 +10,9 @@ namespace Tetris
         private Grid Grid;
         private Random _random;
         private Tetromino[] tetrominos;
+        private bool _isPaused = false;
+        private Tetromino nextTetromino;
+        private PreviewGrid _nextSlot;
 
         public Form1()
         {
@@ -27,10 +29,13 @@ namespace Tetris
             _random = new Random();
             tetrominos = Tetromino.ListAll();
 
+            _nextSlot = new PreviewGrid(4, 2, NextGridBox);
             Grid = new Grid(GridBox, new PlayGround(GridBox.ColumnCount - 2, GridBox.RowCount - 2, GridBox));
 
             SetDoubleBuffered(GridBox);
             SetDoubleBuffered(NextGridBox);
+
+            Focus();
 
             // Start game loop
             GameLoop.Start();
@@ -38,7 +43,7 @@ namespace Tetris
 
         private void SpawnNextTetrimono()
         {
-            var tetronimo = tetrominos[_random.Next(0, tetrominos.Length)].Clone();
+            var tetronimo = nextTetromino ?? tetrominos[_random.Next(0, tetrominos.Length)].Clone();
             if (!Grid.PlayGround.IsValidTetrominoPosition(Constants.TetrominoSpawnPosition.X, Constants.TetrominoSpawnPosition.Y, tetronimo))
             {
                 // Game over?
@@ -50,10 +55,18 @@ namespace Tetris
                 // Paint a random tetromino at spawn location
                 Grid.PlayGround.PaintTetromino(Constants.TetrominoSpawnPosition, tetronimo);
             }
+
+            nextTetromino = tetrominos[_random.Next(0, tetrominos.Length)].Clone();
+
+            // Render nextTetromino in 
+            _nextSlot.ClearTetromino();
+            _nextSlot.PaintTetromino(0, 0, nextTetromino);
+            _nextSlot.Render();
         }
 
         private void GameLoop_Tick(object sender, EventArgs e)
         {
+            if (_isPaused) return;
             if (!Grid.PlayGround.IsFalling)
             {
                 SpawnNextTetrimono();
@@ -98,7 +111,16 @@ namespace Tetris
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
-            if (!Grid.PlayGround.IsFalling) return;
+            if (_isPaused)
+            {
+                e.Handled = true;
+                return;
+            }
+            if (!Grid.PlayGround.IsFalling)
+            {
+                e.Handled = true;
+                return;
+            }
             if (e.KeyCode == Keys.Left || e.KeyCode == Keys.Q)
             {
                 if (!Grid.PlayGround.MoveTetromino(Direction.Left)) return;
@@ -114,7 +136,7 @@ namespace Tetris
                 if (!Grid.PlayGround.MoveTetromino(Direction.Down))
                 {
                     // If we have collided, we clear the tetronimo from the memory
-                    // But we make sure not the clear the cells.
+                    // But we make sure not to clear the cells.
                     Grid.PlayGround.ClearTetromino(false);
 
                     // Check if we completed a line
@@ -148,7 +170,22 @@ namespace Tetris
                     // We don't need to render, because nothing changed
                 }
             }
-            e.Handled = true;
+        }
+
+        private void PauseButton_Click(object sender, EventArgs e)
+        {
+            _isPaused = !_isPaused;
+            PauseButton.Text = _isPaused ? "UnPause" : "Pause";
+        }
+
+        private void Textbox_Enter(object sender, EventArgs e)
+        {
+            ActiveControl = null;
+        }
+
+        private void NextGridBox_CellPaint(object sender, TableLayoutCellPaintEventArgs e)
+        {
+            _nextSlot.PaintCell(sender, e);
         }
     }
 }
