@@ -139,17 +139,17 @@ namespace Tetris
                 e.Handled = true;
                 return;
             }
-            if (e.KeyCode == Keys.Left || e.KeyCode == Keys.Q)
+            if (e.KeyCode == Keys.Q)
             {
                 if (!Grid.PlayGround.MoveTetromino(Direction.Left)) return;
                 Grid.Render();
             }
-            else if (e.KeyCode == Keys.Right || e.KeyCode == Keys.D)
+            else if (e.KeyCode == Keys.D)
             {
                 if (!Grid.PlayGround.MoveTetromino(Direction.Right)) return;
                 Grid.Render();
             }
-            else if (e.KeyCode == Keys.Down || e.KeyCode == Keys.S)
+            else if (e.KeyCode == Keys.S)
             {
                 if (!Grid.PlayGround.MoveTetromino(Direction.Down))
                 {
@@ -170,7 +170,7 @@ namespace Tetris
                 }
                 Grid.Render();
             }
-            else if (e.KeyCode == Keys.Up || e.KeyCode == Keys.Z)
+            else if (e.KeyCode == Keys.Z)
             {
                 // Rotate tetromino
                 var currentPos = Grid.PlayGround.TetronimoPosition;
