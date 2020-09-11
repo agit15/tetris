@@ -12,13 +12,13 @@ namespace Tetris.Config
 
         public static Dictionary<Color, int> PointsPerColor = new Dictionary<Color, int>
         {
-            { Color.Cyan, 6 },
-            { Color.Blue, 8 },
+            { Color.Cyan, 10 },
+            { Color.Blue, 7 },
             { Color.Orange, 7 },
             { Color.Yellow, 6 },
-            { Color.Red, 5 },
+            { Color.Red, 8 },
             { Color.Green, 8 },
-            { Color.Magenta, 9 }
+            { Color.Magenta, 12 }
         };
 
         public static Dictionary<Color, string[]> TetrominoPatterns = new Dictionary<Color, string[]>

@@ -75,7 +75,12 @@ namespace Tetris
 
             if (!Grid.PlayGround.IsFalling)
             {
-                GameLoop.Interval = 1000 - (int.Parse(LevelBox.Text) * 50);
+                // Set speed based on level
+                int level = int.Parse(LevelBox.Text);
+                GameLoop.Interval = 900 - (level * 35);
+
+                if (GameLoop.Interval < 200)
+                    GameLoop.Interval = 200;
 
                 SpawnNextTetrimono();
             }

@@ -109,7 +109,7 @@
             // 
             // GameLoop
             // 
-            this.GameLoop.Interval = 600;
+            this.GameLoop.Interval = 850;
             this.GameLoop.Tick += new System.EventHandler(this.GameLoop_Tick);
             // 
             // label1
