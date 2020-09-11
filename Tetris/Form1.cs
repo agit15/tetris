@@ -46,7 +46,7 @@ namespace Tetris
             GameLoop.Start();
         }
 
-        private void SpawnNextTetrimono()
+        private void SpawnNextTetromino()
         {
             var tetronimo = nextTetromino ?? tetrominos[_random.Next(0, tetrominos.Length)].Clone();
             if (!Grid.PlayGround.IsValidTetrominoPosition(Constants.TetrominoSpawnPosition.X, Constants.TetrominoSpawnPosition.Y, tetronimo))
@@ -86,7 +86,7 @@ namespace Tetris
                 if (GameLoop.Interval < 200)
                     GameLoop.Interval = 200;
 
-                SpawnNextTetrimono();
+                SpawnNextTetromino();
             }
             else
             {
@@ -170,7 +170,7 @@ namespace Tetris
                     LevelBox.Text = Grid.PlayGround.Level.ToString();
 
                     // Spawn the next
-                    SpawnNextTetrimono();
+                    SpawnNextTetromino();
                 }
                 Grid.Render();
             }
