@@ -52,6 +52,11 @@ namespace Tetris.Components
                     SetCell(x, y, null);
                 }
             }
+
+            _currentTetromino = null;
+            LinesScored = 0;
+            Level = 0;
+            Score = 0;
         }
 
         public override void Render()

@@ -53,6 +53,10 @@ namespace Tetris
             {
                 // Game over?
                 GameLoop.Stop();
+
+                // Allow restarting
+                PauseButton.Text = "Reset";
+
                 return;
             }
             else
@@ -197,6 +201,23 @@ namespace Tetris
 
         private void PauseButton_Click(object sender, EventArgs e)
         {
+            if (PauseButton.Text == "Reset")
+            {
+                PauseButton.Text = "Pause";
+
+                // Reset stats
+                LevelBox.Text = "0";
+                ScoreBox.Text = "0";
+                LinesBox.Text = "0";
+
+                Grid.PlayGround.Reset();
+                Grid.PlayGround.Render();
+
+                GameLoop.Start();
+
+                _isPaused = false;
+                return;
+            }
             _isPaused = !_isPaused;
             PauseButton.Text = _isPaused ? "UnPause" : "Pause";
         }
