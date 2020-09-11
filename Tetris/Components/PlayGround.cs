@@ -150,9 +150,15 @@ namespace Tetris.Components
 
                     LinesScored++;
                     Score += score;
-                    Level = (int)Math.Round((Score / 100f) * 0.3f);
                 }
             }
+
+            Level = (int)Math.Round((Score / 100f) * 0.3f);
+
+            // Max Level
+            if (Level >= 20)
+                Level = 20;
+
             return updated;
         }
 
